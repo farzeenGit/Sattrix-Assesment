@@ -1,0 +1,54 @@
+CREATE TABLE employee (
+  id INT PRIMARY KEY,
+  name VARCHAR(255),
+  address_id INT,
+  gender VARCHAR(10),
+  contact VARCHAR(20),
+  department_id INT,
+  FOREIGN KEY (address_id) REFERENCES address(id),
+  FOREIGN KEY (department_id) REFERENCES department(id)
+);
+
+CREATE TABLE department (
+  id INT PRIMARY KEY,
+  departmentname VARCHAR(255)
+);
+
+CREATE TABLE address (
+  id INT PRIMARY KEY,
+  street1 VARCHAR(255),
+  street2 VARCHAR(255),
+  city VARCHAR(255),
+  state VARCHAR(255)
+);
+
+1)To join the employee and address tables:
+
+SELECT employee.id, employee.name, address.street1, address.street2, address.city, address.state
+FROM employee
+JOIN address ON employee.address_id = address.id;
+
+
+2)To join the employee and department tables:
+
+OneToOne:
+
+SELECT employee.id, employee.name, department.departmentname
+FROM employee
+JOIN department ON employee.department_id = department.id;
+
+3)OneToMany:
+
+SELECT department.departmentname, employee.name
+FROM department
+JOIN employee ON employee.department_id = department.id;
+
+4)ManyToMany:
+
+SELECT employee.name, department.departmentname
+FROM employee
+JOIN employee_department ON employee.id = employee_department.employee_id
+JOIN department ON employee_department.department_id = department.id;
+
+
+
